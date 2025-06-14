@@ -176,3 +176,4 @@ echo. & pause & goto MainMenu
     echo ; --- GN Manager Suite Configuration ---
 ) > "%ConfigFile%"
 goto :eof
+
