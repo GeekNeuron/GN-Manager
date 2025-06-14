@@ -3,22 +3,32 @@
     --transition-speed: 0.3s;
 }
 
+/* Light Theme Colors */
 .light-theme {
     --bg-color: #f4f7f9;
     --text-color: #333;
     --header-bg: #ffffff;
     --accent-color: #007bff;
     --panel-bg: #e9ecef;
+    --button-bg-hover: #0056b3;
     --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
+/* Dark Theme Colors (New) */
 .dark-theme {
-    --bg-color: #121212;
-    --text-color: #e0e0e0;
-    --header-bg: #1e1e1e;
-    --accent-color: #00aaff;
-    --panel-bg: #2a2a2a;
+    --bg-color: #0d1117;
+    --text-color: #c9d1d9;
+    --header-bg: #161b22;
+    --accent-color: #3282b8;
+    --panel-bg: #1e2732;
+    --button-bg-hover: #1d4357;
     --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Global Reset and No Click Highlight */
+* {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 
 body {
@@ -27,16 +37,17 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     transition: background-color var(--transition-speed), color var(--transition-speed);
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 header {
     background-color: var(--header-bg);
     text-align: center;
-    padding: 2rem 1rem;
+    padding: 2.5rem 1rem;
     border-bottom: 1px solid var(--panel-bg);
     cursor: pointer;
     transition: background-color var(--transition-speed);
+    user-select: none;
 }
 
 .header-content {
@@ -53,7 +64,7 @@ header {
 
 header h1 {
     margin: 0;
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: var(--accent-color);
 }
 
@@ -63,30 +74,58 @@ header p {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    color: var(--text-color);
+    opacity: 0.8;
 }
 
 main {
     max-width: 800px;
-    margin: 2rem auto;
+    margin: 3rem auto;
     padding: 0 1rem;
 }
 
 section {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 }
 
 h2 {
+    position: relative;
     text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2rem;
-    color: var(--accent-color);
-    border-bottom: 2px solid var(--accent-color);
+    margin-bottom: 2.5rem;
+    font-size: 2.2rem;
+    color: var(--text-color);
     display: inline-block;
     padding-bottom: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Decorative Pipe before H2 */
+h2::before {
+    content: '|';
+    position: absolute;
+    left: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.2rem;
+    font-weight: 200;
+    color: var(--accent-color);
+    opacity: 0.5;
 }
 
 section#about p {
     text-align: justify;
+    font-size: 1.1rem;
+}
+
+section#about a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+section#about a:hover {
+    text-decoration: underline;
 }
 
 /* Accordion Styles */
@@ -94,31 +133,33 @@ section#about p {
     background-color: var(--header-bg);
     color: var(--text-color);
     cursor: pointer;
-    padding: 18px;
+    padding: 18px 25px;
     width: 100%;
     border: none;
     text-align: left;
     outline: none;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: bold;
     transition: background-color var(--transition-speed);
-    border-radius: 5px;
+    border-radius: 8px;
     margin-top: 10px;
-    box-shadow: 0 2px 5px var(--shadow-color);
+    box-shadow: 0 4px 8px var(--shadow-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    user-select: none;
 }
 
 .accordion-button:hover, .accordion-button.active {
     background-color: var(--accent-color);
-    color: white;
+    color: #ffffff;
 }
 
 .accordion-button::after {
     content: '+';
-    font-size: 1.5rem;
-    transition: transform var(--transition-speed);
+    font-size: 2rem;
+    font-weight: 300;
+    transition: transform var(--transition-speed) ease-in-out;
 }
 
 .accordion-button.active::after {
@@ -127,19 +168,41 @@ section#about p {
 }
 
 .panel {
-    padding: 0 18px;
+    padding: 0 25px;
     background-color: var(--panel-bg);
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.2s ease-out;
-    border-radius: 0 0 5px 5px;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    border-radius: 0 0 8px 8px;
+    border-top: 1px solid var(--accent-color);
+}
+
+.panel p {
+    opacity: 0.9;
+}
+
+.download-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 10px 0 20px 0;
+    transition: background-color var(--transition-speed);
+}
+
+.download-button:hover {
+    background-color: var(--button-bg-hover);
 }
 
 footer {
     text-align: center;
     padding: 2rem;
-    margin-top: 3rem;
+    margin-top: 4rem;
     border-top: 1px solid var(--panel-bg);
+    user-select: none;
 }
 
 footer a {
