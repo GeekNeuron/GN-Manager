@@ -9,12 +9,18 @@ Welcome to **GN Manager**, a powerful and professional suite of command-line too
 
 ## Key Features
 
-The GN Manager suite is composed of four specialized, yet integrated, tools:
+The GN Manager suite is a comprehensive collection of specialized, high-performance tools:
 
--   **GN Winget Install Manager:** For modern, online software installation and upgrading via the official Windows Package Manager.
--   **GN Local Install Manager:** For rapid, offline installation of software from a local folder of installers.
--   **GN Cleaner Manager:** A comprehensive tool for uninstalling applications and deep-cleaning leftover files and registry entries.
--   **GN Backup Manager:** A vital utility for backing up and restoring application data, settings, and registry keys, saving hours of reconfiguration.
+1.  **GN Winget Manager:** For modern, online software installation, searching, and upgrading via Winget.
+2.  **GN Local Install Manager:** For rapid, offline installation of software from a local folder of installers.
+3.  **GN Cleaner Manager:** A deep-cleaning tool for uninstalling applications and removing leftover files and registry entries.
+4.  **GN Backup Manager:** A vital utility for backing up and restoring application data, settings, and registry keys.
+5.  **GN System Info:** A detailed reporter that displays comprehensive information about your system's hardware and software.
+6.  **GN Network Manager:** A powerful diagnostics toolkit for analyzing and troubleshooting network and internet issues.
+7.  **GN Repair Toolkit:** An expert-level tool for fixing common and advanced problems in Windows and its services.
+8.  **GN Tweak Manager:** A configuration tool for power users to enable or disable sensitive Windows settings.
+9.  **GN Driver Manager:** An advanced utility for diagnosing driver issues, finding correct drivers online, and performing full backup/restore of installed drivers.
+10. **GN Disk Analyzer:** A powerful disk space reporter that scans drives/folders to show which files and subfolders are consuming the most space, inspired by TreeSize.
 
 ---
 
