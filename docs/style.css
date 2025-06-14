@@ -221,3 +221,32 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-links img {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.social-links img:hover {
+    transform: scale(1.2);
+}
+
+.separator {
+    font-size: 2rem;
+    color: var(--text-color);
+    opacity: 0.3;
+}
+
+.support-text {
+    font-weight: bold;
+    opacity: 0.8;
+}
