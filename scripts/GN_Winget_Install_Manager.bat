@@ -130,3 +130,4 @@ echo. & echo  !cSuccess![V] Selected upgrades have been completed.!cReset! & pau
     echo ;UserSettings=%%USERPROFILE%%\AppData\Roaming\Code\User
 ) > "%ConfigFile%"
 goto :eof
+
