@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GN-Manager by GeekNeuron</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+</head>
+<body class="dark-theme">
+
+    <header id="theme-toggle">
+        <div class="header-content">
+            <img src="assets/logo.svg" alt="GN Manager Logo" class="logo">
+            <h1>GN Manager</h1>
+        </div>
+        <p>A powerful and professional suite of command-line tools to automate software management on Windows.</p>
+    </header>
+
+    <main>
+        <section id="about">
+            <h2>About The Project</h2>
+            <p>
+                GN Manager is a comprehensive solution for Windows power users. Instead of a single, monolithic script, it's a suite of four specialized, high-performance tools that work in harmony. The suite includes the <strong>GN Winget Install Manager</strong> for modern online installations, the <strong>GN Local Install Manager</strong> for rapid offline setups, the <strong>GN Cleaner Manager</strong> for deep system cleaning, and the <strong>GN Backup Manager</strong> for vital data and settings protection. Each tool is designed to be powerful on its own, but together they form the ultimate toolkit for Windows automation.
+            </p>
+        </section>
+
+        <section id="features">
+            <h2>The Tool Suite</h2>
+
+            <div class="accordion">
+                <button class="accordion-button">GN Winget Install Manager</button>
+                <div class="panel">
+                    <p>Focuses on modern, online software management using the official Windows Package Manager (Winget). It allows you to search, install, and upgrade thousands of applications directly from their official repositories, ensuring you always have the latest versions.</p>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button class="accordion-button">GN Local Install Manager</button>
+                <div class="panel">
+                    <p>A simple yet powerful drag-and-drop utility designed for offline or bulk installations. Just drop a folder containing your `.exe` and `.msi` installers onto the script, and it will attempt to install all of them silently and sequentially.</p>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button class="accordion-button">GN Cleaner Manager</button>
+                <div class="panel">
+                    <p>Your all-in-one uninstallation and system cleanup tool. It intelligently lists installed programs, uninstalls them, then hunts down leftover files (moving them to a safe quarantine) and orphaned registry keys (deleting them with your explicit, per-key confirmation).</p>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button class="accordion-button">GN Backup Manager</button>
+                <div class="panel">
+                    <p>The ultimate safety net for power users. Define profiles for complex applications (like IDEs or creative software) in the config file. This tool can then export all their critical data, settings, and registry keys for easy restoration later, saving countless hours of reconfiguration.</p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>Created by <a href="https://github.com/GeekNeuron/GN-Manager" target="_blank">GeekNeuron</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
