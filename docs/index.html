@@ -1,75 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GN Manager by GeekNeuron</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GN Manager by GeekNeuron</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 </head>
 <body class="dark-theme">
 
-    <header id="theme-toggle">
-        <div class="header-content">
-            <img src="assets/logo.svg" alt="GN Manager Logo" class="logo">
-            <h1>GN Manager</h1>
-        </div>
-        <p>A complete and professional suite of command-line tools designed to automate and master software management on Windows.</p>
-    </header>
+    <header id="theme-toggle">
+        <div class="header-content">
+            <img src="assets/logo.svg" alt="GN Manager Logo" class="logo">
+            <h1>GN Manager</h1>
+        </div>
+        <p>A complete and professional suite of command-line tools designed to automate and master software management on Windows.</p>
+    </header>
 
-    <main>
-        <section id="about">
-            <h2>About The Project</h2>
-            <p>
-                GN Manager is a comprehensive solution for Windows power users. Instead of a single, monolithic script, it's a suite of four specialized, high-performance tools that work in harmony. The suite includes the <strong>GN Winget Install Manager</strong> for modern online installations, the <strong>GN Local Install Manager</strong> for rapid offline setups, the <strong>GN Cleaner Manager</strong> for deep system cleaning, and the <strong>GN Backup Manager</strong> for vital data and settings protection. Each tool is designed to be powerful on its own, but together they form the ultimate toolkit for Windows automation.
-            </p>
-            <p>
-                Explore the full project and its source code on the official <a href="https://github.com/GeekNeuron/GN-Manager" target="_blank">GitHub repository</a>.
-            </p>
-        </section>
+    <main>
+        <section id="about">
+            <h2>About The Project</h2>
+            <p>
+                GN Manager is a comprehensive solution for Windows power users. Instead of a single, monolithic script, it's a suite of specialized, high-performance tools that work in harmony. The suite includes the <strong>GN Winget Manager</strong> for modern online installations, the <strong>GN Local Install Manager</strong> for rapid offline setups, the <strong>GN Cleaner Manager</strong> for deep system cleaning, the <strong>GN Backup Manager</strong> for vital data protection, and many more advanced toolkits for repair, diagnostics, and tweaking.
+            </p>
+<p>
+                > Explore the full project and its source code on the official <a href="https://github.com/GeekNeuron/GN-Manager" target="_blank">GitHub repository</a>.
+            </p>
+        </section>
 
-        <section id="features">
-            <h2>The Tool Suite</h2>
+        <section id="features">
+            <h2>The Tool Suite</h2>
 
-            <div class="accordion">
-                <button class="accordion-button">GN Winget Install Manager</button>
-                <div class="panel">
-                    <p>This tool is your gateway to the modern Windows Package Manager ecosystem. It focuses exclusively on online software management, allowing you to search, install, and upgrade thousands of applications directly from their official repositories, ensuring you always have the latest, most secure versions.</p>
-                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Winget_Install_Manager.bat" class="download-button" download>Download Script</a>
-                </div>
-            </div>
+            <div class="accordion">
+                <button class="accordion-button">GN Winget Manager</button>
+                <div class="panel">
+                    <p>Your gateway to the modern Windows Package Manager ecosystem. It allows you to search, install, and upgrade thousands of applications directly from Microsoft's official repositories.</p>
+                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Winget_Manager.bat" class="download-button" download>Download Script</a>
+                </div>
+            </div>
 
-            <div class="accordion">
-                <button class="accordion-button">GN Local Install Manager</button>
-                <div class="panel">
-                    <p>A simple yet powerful drag-and-drop utility designed for offline or bulk installations. Just drop a folder containing your `.exe` and `.msi` installers onto the script, and it will attempt to install all of them silently and sequentially.</p>
-                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Local_Install_Manager.bat" class="download-button" download>Download Script</a>
-                </div>
-            </div>
+            <div class="accordion">
+                <button class="accordion-button">GN Local Install Manager</button>
+                <div class="panel">
+                    <p>A simple drag-and-drop utility for offline or bulk installations. Drop a folder of your .exe and .msi installers onto the script to install them all silently.</p>
+                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Local_Install_Manager.bat" class="download-button" download>Download Script</a>
+                </div>
+            </div>
 
-            <div class="accordion">
-                <button class="accordion-button">GN Cleaner Manager</button>
-                <div class="panel">
-                    <p>A comprehensive system hygiene tool for meticulously uninstalling applications and removing all their traces. It goes beyond the standard uninstaller by deep-scanning for leftover files (which it safely moves to a quarantine folder) and orphaned registry keys (deleting them with your explicit, per-key confirmation).</p>
-                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Cleaner_Manager.bat" class="download-button" download>Download Script</a>
-                </div>
-            </div>
+            <div class="accordion">
+                <button class="accordion-button">GN Cleaner Manager</button>
+                <div class="panel">
+                    <p>A comprehensive system hygiene tool for meticulously uninstalling applications and removing all their traces, including leftover files (safely quarantined) and orphaned registry keys.</p>
+                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Cleaner_Manager.bat" class="download-button" download>Download Script</a>
+                </div>
+            </div>
 
-            <div class="accordion">
-                <button class="accordion-button">GN Backup Manager</button>
-                <div class="panel">
-                    <p>The ultimate safety net and time-saver for developers and power users. This utility allows you to define backup profiles for your most complex applications (like IDEs or creative software) in a simple config file. It can then export all their critical data, settings, plugins, and even registry keys, allowing you to restore your entire workspace environment in minutes on a new installation.</p>
-                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Backup_Manager.bat" class="download-button" download>Download Script</a>
-                </div>
-            </div>
+            <div class="accordion">
+                <button class="accordion-button">GN Backup Manager</button>
+                <div class="panel">
+                    <p>The ultimate safety net for power users. Define backup profiles for your complex applications to export and restore gigabytes of data, settings, and registry keys in minutes.</p>
+                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Backup_Manager.bat" class="download-button" download>Download Script</a>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <button class="accordion-button">GN System Info</button>
+                <div class="panel">
+                    <p>A detailed reporting tool that displays a comprehensive overview of your system's hardware (CPU, RAM, GPU, Disks) and software (OS details) in a clean, organized format.</p>
+                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_System_Info.bat" class="download-button" download>Download Script</a>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <button class="accordion-button">GN Network Manager</button>
+                <div class="panel">
+                    <p>A powerful diagnostics toolkit for analyzing and troubleshooting network and internet issues. Includes Ping, Traceroute, DNS & WHOIS lookup, active connection monitoring, and a speed test utility.</p>
+                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Network_Manager.bat" class="download-button" download>Download Script</a>
+                </div>
+            </div>
 
-        </section>
-    </main>
+            <div class="accordion">
+                <button class="accordion-button">GN Repair Toolkit</button>
+                <div class="panel">
+                    <p>The "mechanic" of the suite. An expert-level tool for fixing common and advanced problems in Windows, including resetting network stacks, clearing update caches, and running system file integrity checks like SFC and DISM.</p>
+                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Repair_Toolkit.bat" class="download-button" download>Download Script</a>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <button class="accordion-button">GN Tweak Manager</button>
+                <div class="panel">
+                    <p>A configuration tool for power users to safely enable or disable sensitive Windows settings like Windows Defender, Windows Update, the Firewall, and various UI elements, with status checks and clear warnings.</p>
+                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Tweak_Manager.bat" class="download-button" download>Download Script</a>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <button class="accordion-button">GN Driver Manager</button>
+                <div class="panel">
+                    <p>An advanced utility for diagnosing hardware issues, finding correct drivers via smart online search, and performing full backup (Export) and restore (Import) of all third-party drivers.</p>
+                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Driver_Manager.bat" class="download-button" download>Download Script</a>
+                </div>
+            </div>
 
-    <footer>
-        <p>Created with ❤️ by <a href="https://github.com/GeekNeuron" target="_blank">GeekNeuron</a></p>
-    </footer>
+            <div class="accordion">
+                <button class="accordion-button">GN Disk Analyzer</button>
+                <div class="panel">
+                    <p>A powerful disk space reporter, inspired by TreeSize, that scans drives or specific folders to generate a detailed report, identifying which files and subfolders are consuming the most space.</p>
+                    <a href="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/scripts/GN_Disk_Analyzer.bat" class="download-button" download>Download Script</a>
+                </div>
+            </div>
 
-    <script src="script.js"></script>
+        </section>
+    </main>
+
+    <footer>
+        <p>Created with ❤️ by <a href="https://github.com/GeekNeuron" target="_blank">GeekNeuron</a></p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
