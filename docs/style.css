@@ -14,7 +14,7 @@
     --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Dark Theme Colors (New) */
+/* Dark Theme Colors */
 .dark-theme {
     --bg-color: #0d1117;
     --text-color: #c9d1d9;
@@ -90,21 +90,19 @@ section {
 
 h2 {
     position: relative;
-    text-align: center;
+    text-align: left; /* Reverted to left alignment */
     margin-bottom: 2.5rem;
     font-size: 2.2rem;
     color: var(--text-color);
-    display: inline-block;
     padding-bottom: 0.5rem;
-    left: 50%;
-    transform: translateX(-50%);
+    border-bottom: 2px solid var(--accent-color);
 }
 
 /* Decorative Pipe before H2 */
 h2::before {
     content: '|';
     position: absolute;
-    left: -25px;
+    left: -20px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 2.2rem;
