@@ -1,0 +1,18 @@
+# Generated files by the GN Manager Suite
+GN_Manager_Config.ini
+GN_Manager_Log.txt
+
+# Backup and Quarantine directories
+/Cleanup_Quarantine/
+/Application_Backups/
+
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Desktop.ini
+[Dd]esktop.ini
+
+# VS Code settings
+.vscode/
