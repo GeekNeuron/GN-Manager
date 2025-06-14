@@ -46,16 +46,10 @@ Check out the project's official page for detailed descriptions and a modern UI.
 ## Installation & Usage
 
 1.  Navigate to the `scripts/` directory in this repository.
-2.  Download the four `.bat` files (`GN_Winget_Install_Manager.bat`, `GN_Local_Install_Manager.bat`, etc.).
-3.  Place all four scripts in the **same folder** on your computer.
-4.  Run any script by double-clicking it. The necessary Admin elevation will be handled automatically.
-
-## Configuration
-
-On the first run, a `GN_Manager_Config.ini` file will be created automatically. You can edit this file to customize:
--   Log file and backup directory names.
--   Search paths for the Cleaner tool.
--   Application profiles for the Backup tool.
+2.  Download all `.bat` files.
+3.  Place all scripts in the **same folder** on your computer.
+4.  To access all tools from a central menu, run the main launcher: **`GN_Manager_Suite.bat`**.
+5.  The necessary Admin elevation will be handled automatically. You can also run individual tools directly if you prefer.
 
 ---
 
