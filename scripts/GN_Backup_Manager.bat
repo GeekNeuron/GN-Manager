@@ -1,10 +1,10 @@
-
 @echo off
 setlocal enabledelayedexpansion
 
 :: =================================================================================
 ::                               GN Backup Manager
 ::                           Part of the GN Manager Suite
+::                       (Upgraded with 7-Zip Compression)
 ::
 :: Author: GeekNeuron
 :: Project: https://github.com/GeekNeuron/GN-Manager
@@ -45,7 +45,7 @@ echo !cTitle!██║  ███╗██╔██╗ ██║    ██║   
 echo !cTitle!██║   ██║██║╚██╗██║    ██║   ██║██╔══██║██║     ██╔══██║██╔══██║██╔══██╗!cReset!
 echo !cTitle!╚██████╔╝██║ ╚████║    ╚██████╔╝██╔══██║╚██████╗██║  ██║██║  ██║██║  ██║!cReset!
 echo !cTitle! ╚═════╝ ╚═╝  ╚═══╝     ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝!cReset!
-echo !cTitle!                             Backup Manager                                 !cReset!
+echo !cTitle!                              Backup Manager                                !cReset!
 echo !cTitle!===============================================================================!cReset!
 echo !cWarning! Author: GeekNeuron                                Project: %cSuccess%https://github.com/GeekNeuron/GN-Manager%cReset!
 echo !cTitle!===============================================================================!cReset!
@@ -53,7 +53,7 @@ echo. & goto :eof
 
 :MainMenu
 call :ShowHeader
-echo           !cTitle!Application Data and Registry Backup / Restore Tool!cReset!
+echo               !cTitle!Application Data and Registry Backup / Restore Tool!cReset!
 echo.
 echo    [1] Export (Backup) Application Data
 echo    [2] Import (Restore) Application Data
@@ -70,7 +70,8 @@ goto MainMenu
 
 :ExportData
 call :ShowHeader & echo  --- Export Application Data ---
-if not exist "%BackupDir%" md "%BackupDir%" & echo. & echo  Available Profiles in %ConfigFile%:
+if not exist "%BackupDir%" md "%BackupDir%"
+echo. & echo  Available Profiles in %ConfigFile%:
 set "profileCount=0"
 for /f "tokens=2 delims=[]" %%P in ('findstr /b /c:"[Profile:" "%ConfigFile%"') do (
     set /a profileCount+=1 & set "Profile_!profileCount!=%%P" & echo  !cSuccess![!profileCount!] %%P!cReset!
@@ -78,22 +79,63 @@ for /f "tokens=2 delims=[]" %%P in ('findstr /b /c:"[Profile:" "%ConfigFile%"') 
 if %profileCount% equ 0 ( echo !cError![!] No profiles found in '%ConfigFile%'.!cReset! & pause & goto MainMenu)
 echo. & set /p "p_choice=!cChoice!Choose a profile number to export: !cReset!"
 if %p_choice% LEQ 0 if %p_choice% GTR %profileCount% goto ExportData
+
+call :ShowHeader & echo --- Choose Backup Format ---
+echo.
+echo    [1] Standard Folder Backup (Fast, larger size)
+echo    [2] Compressed Archive (.7z) (Slower, smaller size, requires 7-Zip)
+echo.
+set /p "formatChoice=!cChoice!Enter your choice (1-2): !cReset!"
+if "%formatChoice%"=="1" goto ExportDataFolder
+if "%formatChoice%"=="2" goto ExportData7z
+goto ExportData
+
+:ExportDataFolder
 set "SelectedProfile=!Profile_%p_choice%!"
 set "timestamp=%date:~10,4%%date:~4,2%%date:~7,2%_%time:~0,2%%time:~3,2%%time:~6,2%" & set "timestamp=!timestamp: =0!"
 set "FullBackupPath=%BackupDir%\%SelectedProfile%_DATA_%timestamp%" & md "%FullBackupPath%"
-echo. & echo !cWarning![*] Starting export for profile '!SelectedProfile!' to:!cReset! & echo !FullBackupPath!
+echo. & echo !cWarning![*] Starting folder export for profile '!SelectedProfile!' to:!cReset! & echo !FullBackupPath!
 set "inSection="
 for /f "tokens=1,* delims==" %%a in ('type "%ConfigFile%"') do (
     if "!inSection!"=="true" ( if "%%a" LSS "[Profile:" (
         set "key=%%a" & set "path=%%b" & set "path=!path:%%USERPROFILE%%=%USERPROFILE%!"
         echo !cTitle!-------------------------------------------------------------------------------!cReset!
         echo  [*] Backing up '!key!' from '!path!'
-        robocopy "!path!" "%FullBackupPath%\!key!" /E /R:2 /W:5
+        robocopy "!path!" "%FullBackupPath%\!key!" /E /R:2 /W:5 /NFL /NDL /NJH /NJS /nc /ns /np > nul
     ) else ( set "inSection=" ))
     if /i "%%a"=="[Profile:!SelectedProfile!]" set "inSection=true"
 )
 echo !cTitle!-------------------------------------------------------------------------------!cReset!
-echo !cSuccess![V] Export for profile '!SelectedProfile!' completed successfully.!cReset! & pause & goto MainMenu
+echo !cSuccess![V] Folder export for profile '!SelectedProfile!' completed successfully.!cReset! & pause & goto MainMenu
+
+:ExportData7z
+where 7z.exe >nul 2>nul
+if %errorlevel% neq 0 (
+    echo. & echo !cError![!] 7-Zip command-line tool (7z.exe) not found.!cReset!
+    echo !cChoice!Would you like to try installing it now using Winget? [Y/N]!cReset!
+    choice /c YN /n & if errorlevel 2 goto MainMenu
+    winget install 7zip.7zip & goto MainMenu
+)
+set "SelectedProfile=!Profile_%p_choice%!"
+set "timestamp=%date:~10,4%%date:~4,2%%date:~7,2%_%time:~0,2%%time:~3,2%%time:~6,2%" & set "timestamp=!timestamp: =0!"
+set "TempBackupPath=%BackupDir%\TEMP_%SelectedProfile%_%timestamp%" & md "%TempBackupPath%"
+set "FinalArchive=%BackupDir%\%SelectedProfile%_DATA_%timestamp%.7z"
+echo. & echo !cWarning![*] Starting compressed export for profile '!SelectedProfile!'...!cReset!
+echo !cWarning!    Step 1 of 2: Copying files to a temporary location...!cReset!
+set "inSection="
+for /f "tokens=1,* delims==" %%a in ('type "%ConfigFile%"') do (
+    if "!inSection!"=="true" ( if "%%a" LSS "[Profile:" (
+        set "key=%%a" & set "path=%%b" & set "path=!path:%%USERPROFILE%%=%USERPROFILE%!"
+        robocopy "!path!" "%TempBackupPath%\!key!" /E /R:2 /W:5 /NFL /NDL /NJH /NJS /nc /ns /np > nul
+    ) else ( set "inSection=" ))
+    if /i "%%a"=="[Profile:!SelectedProfile!]" set "inSection=true"
+)
+echo !cWarning!    Step 2 of 2: Compressing files into '%FinalArchive%'...!cReset!
+7z.exe a -t7z "%FinalArchive%" "%TempBackupPath%\*" > nul
+rd /s /q "%TempBackupPath%"
+echo !cTitle!-------------------------------------------------------------------------------!cReset!
+echo !cSuccess![V] Compressed export completed successfully.!cReset! & pause & goto MainMenu
+
 
 :ImportData
 call :ShowHeader & echo  --- Import Application Data ---
@@ -101,26 +143,46 @@ if not exist "%BackupDir%" (echo !cError![!] Backup directory not found.!cReset!
 echo. & echo  Available Data Backups in %BackupDir%:
 set "backupCount=0"
 for /f "delims=" %%B in ('dir "%BackupDir%\*_DATA_*" /b /ad') do (
-    set /a backupCount+=1 & set "Backup_!backupCount!=%%B" & echo  !cSuccess![!backupCount!] %%B!cReset!
+    set /a backupCount+=1 & set "Backup_!backupCount!=%%B" & echo  [!backupCount!] %%B !cWarning!(Folder)!cReset!
+)
+for /f "delims=" %%B in ('dir "%BackupDir%\*.7z" /b') do (
+    set /a backupCount+=1 & set "Backup_!backupCount!=%%B" & echo  [!backupCount!] %%B !cSuccess!(Compressed)!cReset!
 )
 if %backupCount% equ 0 (echo !cError![!] No data backups found.!cReset! & pause & goto MainMenu)
 echo. & set /p "b_choice=!cChoice!Choose a backup number to restore: !cReset!"
 if %b_choice% LEQ 0 if %b_choice% GTR %backupCount% goto ImportData
-set "SelectedBackup=!Backup_%b_choice%!" & set "FullBackupPath=%BackupDir%\%SelectedBackup%"
+set "SelectedBackup=!Backup_%b_choice%!"
+set "FullBackupPath=%BackupDir%\%SelectedBackup%"
+
+if "!SelectedBackup:~-3!"==".7z" (
+    where 7z.exe >nul 2>nul
+    if %errorlevel% neq 0 (
+        echo. & echo !cError![!] 7-Zip is required to extract this archive. Please install it first.!cReset! & pause & goto MainMenu
+    )
+    set "TempRestorePath=%BackupDir%\TEMP_RESTORE"
+    if exist "%TempRestorePath%" rd /s /q "%TempRestorePath%"
+    md "%TempRestorePath%"
+    echo !cWarning![*] Extracting archive... please wait.!cReset!
+    7z.exe x "%FullBackupPath%" -o"%TempRestorePath%" > nul
+    set "FullBackupPath=%TempRestorePath%"
+)
+
 for /f "tokens=1 delims=_" %%N in ("!SelectedBackup!") do set "ProfileName=%%N"
 echo. & echo !cError!WARNING! This will overwrite current data.!cReset!
 echo !cChoice!Are you sure you want to restore data for profile '!ProfileName!'? [Y/N]!cReset! & choice /c YN /n
-if errorlevel 2 goto MainMenu
+if errorlevel 2 goto CleanupAndExit
 set "inSection="
 for /f "tokens=1,* delims==" %%a in ('type "%ConfigFile%"') do (
     if "!inSection!"=="true" ( if "%%a" LSS "[Profile:" (
         set "key=%%a" & set "path=%%b" & set "path=!path:%%USERPROFILE%%=%USERPROFILE%!"
         echo !cTitle!-------------------------------------------------------------------------------!cReset!
         echo  [*] Restoring '!key!' to '!path!'
-        robocopy "%FullBackupPath%\!key!" "!path!" /E /R:2 /W:5
+        robocopy "!FullBackupPath!\!key!" "!path!" /E /R:2 /W:5 /NFL /NDL /NJH /NJS /nc /ns /np > nul
     ) else ( set "inSection=" ))
-    if /i "%%a"=="[Profile:!ProfileName!]" set "insection=true"
+    if /i "%%a"=="[Profile:!ProfileName!]" set "inSection=true"
 )
+:CleanupAndExit
+if exist "%TempRestorePath%" rd /s /q "%TempRestorePath%"
 echo !cTitle!-------------------------------------------------------------------------------!cReset!
 echo !cSuccess![V] Import for backup '!SelectedBackup!' completed successfully.!cReset! & pause & goto MainMenu
 
