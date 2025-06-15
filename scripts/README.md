@@ -139,6 +139,7 @@ An advanced operations commander for your files, built to perform complex bulk t
 
 #### 🤖 **GN Automation Scheduler**
 The "autopilot" for the entire suite, transforming your tools from reactive utilities into a proactive, self-maintaining system.
+
 * **Capabilities:**
     * **Wizard-Based Task Creation:** A user-friendly, step-by-step wizard guides you through scheduling any other GN Manager script to run automatically.
     * **Flexible Scheduling:** Set tasks to run Daily or Weekly at a specific time, or to trigger automatically every time a user logs on.
