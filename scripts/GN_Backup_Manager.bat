@@ -228,3 +228,4 @@ echo !cSuccess![+] Search complete. Found and processed %foundCount% potential k
     echo ;UserSettings=%%USERPROFILE%%\AppData\Roaming\Code\User
 ) > "%ConfigFile%"
 goto :eof
+
