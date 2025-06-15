@@ -4,6 +4,7 @@ setlocal enabledelayedexpansion
 :: =================================================================================
 ::                               GN System Info
 ::                           Part of the GN Manager Suite
+::                         (Upgraded with CSV Export)
 ::
 :: Author: GeekNeuron
 :: Project: https://github.com/GeekNeuron/GN-Manager
@@ -48,7 +49,7 @@ echo. & goto :eof
 
 :MainMenu
 call :ShowHeader
-echo                 !cTitle!System Information Reporter!cReset!
+echo                   !cTitle!System Information Reporter!cReset!
 echo.
 echo    [1] OS and System Summary
 echo    [2] CPU Information
@@ -58,10 +59,11 @@ echo    [5] Graphics Card (GPU) Information
 echo    [6] Network Adapters Information
 echo.
 echo    [7] !cWarning!Show ALL Information (Sequential)!cReset!
+echo    [8] !cSuccess!Export Full Report to CSV Files!cReset!
 echo.
-echo    [8] Exit
+echo    [9] Exit
 echo.
-set /p "choice=!cChoice!Enter your choice (1-8): !cReset!"
+set /p "choice=!cChoice!Enter your choice (1-9): !cReset!"
 if "%choice%"=="1" call :GetOSInfo
 if "%choice%"=="2" call :GetCPUInfo
 if "%choice%"=="3" call :GetRAMInfo
@@ -69,7 +71,8 @@ if "%choice%"=="4" call :GetDiskInfo
 if "%choice%"=="5" call :GetGPUInfo
 if "%choice%"=="6" call :GetNetworkInfo
 if "%choice%"=="7" call :ShowAll
-if "%choice%"=="8" exit /b
+if "%choice%"=="8" call :ExportAllToCsv
+if "%choice%"=="9" exit /b
 goto MainMenu
 
 :GetOSInfo
@@ -132,19 +135,23 @@ call :GetGPUInfo
 call :GetNetworkInfo
 goto MainMenu
 
+:ExportAllToCsv
+call :ShowHeader & echo  --- Export Full System Report to CSV ---
+set "timestamp=%date:~10,4%%date:~4,2%%date:~7,2%_%time:~0,2%%time:~3,2%%time:~6,2%" & set "timestamp=!timestamp: =0!"
+set "ReportFolder=.\GN_System_Report_%timestamp%"
+md "%ReportFolder%"
+echo !cWarning![*] Generating CSV reports... please wait.!cReset!
+powershell -Command "Get-WmiObject -Class Win32_OperatingSystem | Select-Object Caption, Version, BuildNumber, OSArchitecture, InstallDate, SerialNumber | Export-Csv -Path '%ReportFolder%\os_info.csv' -NoTypeInformation -Encoding UTF8"
+powershell -Command "Get-WmiObject -Class Win32_Processor | Select-Object Name, NumberOfCores, NumberOfLogicalProcessors, MaxClockSpeed | Export-Csv -Path '%ReportFolder%\cpu_info.csv' -NoTypeInformation -Encoding UTF8"
+powershell -Command "Get-WmiObject -Class Win32_PhysicalMemory | Select-Object BankLabel, @{Name='Capacity(GB)';E={[math]::Round($_.Capacity / 1GB, 2)}}, Speed, Manufacturer, PartNumber | Export-Csv -Path '%ReportFolder%\ram_info.csv' -NoTypeInformation -Encoding UTF8"
+powershell -Command "Get-WmiObject -Class Win32_LogicalDisk | Select-Object DeviceID, VolumeName, FileSystem, @{Name='Size(GB)';E={[math]::Round($_.Size / 1GB, 2)}}, @{Name='FreeSpace(GB)';E={[math]::Round($_.FreeSpace / 1GB, 2)}} | Export-Csv -Path '%ReportFolder%\disk_info.csv' -NoTypeInformation -Encoding UTF8"
+powershell -Command "Get-WmiObject -Class Win32_VideoController | Select-Object Name, DriverVersion, @{Name='AdapterRAM(MB)';E={[math]::Round($_.AdapterRAM / 1MB, 2)}} | Export-Csv -Path '%ReportFolder%\gpu_info.csv' -NoTypeInformation -Encoding UTF8"
+powershell -Command "Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter 'IPEnabled=True' | Select-Object Description, IPAddress, MACAddress | Export-Csv -Path '%ReportFolder%\network_info.csv' -NoTypeInformation -Encoding UTF8"
+echo !cSuccess![V] All system reports have been exported to the folder:!cReset! & echo %cd%\%ReportFolder%
+echo. & pause & start "" "%ReportFolder%" & goto MainMenu
+
 :CreateDefaultConfig
 (
     echo ; --- GN Manager Suite Configuration ---
-    echo ; -- General Settings --
-    echo LogFile=GN_Manager_Log.txt
-    echo ; -- Cleaner Manager Settings --
-    echo QuarantineDir=.\Cleanup_Quarantine
-    echo SearchPaths=%%ProgramFiles%% %%ProgramFiles(x86)%% %%APPDATA%% %%LOCALAPPDATA%% %%PROGRAMDATA%%
-    echo ; -- Backup Manager Settings --
-    echo BackupDir=.\Application_Backups
-    echo ; --- Application Data Profiles for Backup Manager ---
-    echo ;[Profile:VSCode]
-    echo ;Extensions=%%USERPROFILE%%\.vscode\extensions
-    echo ;UserSettings=%%USERPROFILE%%\AppData\Roaming\Code\User
 ) > "%ConfigFile%"
 goto :eof
