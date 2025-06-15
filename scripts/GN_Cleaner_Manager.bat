@@ -4,6 +4,7 @@ setlocal enabledelayedexpansion
 :: =================================================================================
 ::                               GN Cleaner Manager
 ::                           Part of the GN Manager Suite
+::                         (Upgraded with CSV Export)
 ::
 :: Author: GeekNeuron
 :: Project: https://github.com/GeekNeuron/GN-Manager
@@ -13,20 +14,12 @@ setlocal enabledelayedexpansion
 for /f "tokens=1 delims=#" %%a in ('"prompt #$E# & for %%b in (1) do rem"') do set "ESC=%%a"
 set "cReset=!ESC![0m" & set "cError=!ESC![91m" & set "cSuccess=!ESC![92m"
 set "cWarning=!ESC![93m" & set "cTitle=!ESC![96m" & set "cChoice=!ESC![93m"
-
-net session >nul 2>nul
-if %errorlevel% neq 0 (
-    cls & echo !cError! [!] ERROR: Administrator privileges are required.!cReset!
-    echo !cWarning! [*] Attempting to re-launch with admin rights...!cReset!
-    powershell -Command "Start-Process -FilePath '%~f0' -Verb RunAs" & exit /b
-)
-
+net session >nul 2>nul & if %errorlevel% neq 0 (cls & echo !cError! [!] ERROR: Admin privileges required.!cReset! & powershell -Command "Start-Process -FilePath '%~f0' -Verb RunAs" & exit /b)
 set "ConfigFile=GN_Manager_Config.ini"
 if not exist "%ConfigFile%" call :CreateDefaultConfig
 set "LogFile=GN_Manager_Log.txt"
 set "QuarantineDir=.\Cleanup_Quarantine"
 set "searchPaths=%ProgramFiles% %ProgramFiles(x86)% %APPDATA% %LOCALAPPDATA% %PROGRAMDATA%"
-
 for /f "tokens=1,* delims==" %%a in ('type "%ConfigFile%" ^| findstr /v /b /c:";"') do (
     set "key=%%a" & set "value=%%b"
     if /i "!key!"=="LogFile" set "LogFile=!value!"
@@ -54,22 +47,42 @@ echo. & goto :eof
 
 :MainMenu
 call :ShowHeader
-echo               !cTitle!Full System Uninstall and Cleanup Tool!cReset!
+echo                   !cTitle!Full System Uninstall and Cleanup Tool!cReset!
 echo.
 echo    [1] Uninstall Program (Legacy Auto-List)
 echo    [2] Uninstall Program (via Winget)
 echo    [3] Clean Leftover Files (Quarantine)
 echo    [4] !cError!Clean Leftover Registry Keys (DANGEROUS)!cReset!
 echo.
-echo    [5] Exit
+echo    [5] !cSuccess!Export Installed Programs to CSV!cReset!
 echo.
-set /p "choice=!cChoice!Enter your choice (1-5): !cReset!"
+echo    [6] Exit
+echo.
+set /p "choice=!cChoice!Enter your choice (1-6): !cReset!"
 if "%choice%"=="1" goto UninstallSoftware
 if "%choice%"=="2" goto WingetUninstall
 if "%choice%"=="3" goto CleanupData
 if "%choice%"=="4" goto RegistryCleanup
-if "%choice%"=="5" exit /b
+if "%choice%"=="5" call :ExportProgramList & pause & goto MainMenu
+if "%choice%"=="6" exit /b
 goto MainMenu
+
+:ExportProgramList
+call :ShowHeader & echo --- Export Installed Programs to CSV ---
+set "timestamp=%date:~10,4%%date:~4,2%%date:~7,2%_%time:~0,2%%time:~3,2%%time:~6,2%" & set "timestamp=!timestamp: =0!"
+set "CsvFile=.\GN_Installed_Programs_%timestamp%.csv"
+echo !cWarning![*] Generating CSV file of all installed programs... please wait.!cReset!
+powershell -ExecutionPolicy Bypass -NoProfile -Command ^
+    "Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*," ^
+    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*," ^
+    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | " ^
+    "Where-Object { $_.DisplayName -ne $null -and $_.SystemComponent -ne 1 -and $_.ReleaseType -ne 'Security Update' -and $_.ReleaseType -ne 'Update Rollup' } | " ^
+    "Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | " ^
+    "Sort-Object DisplayName | " ^
+    "Export-Csv -Path '%CsvFile%' -NoTypeInformation -Encoding UTF8"
+echo !cSuccess![V] Report generated successfully:!cReset! & echo %cd%\%CsvFile%
+echo. & start "" "%CsvFile%"
+goto :eof
 
 :WingetUninstall
 call :ShowHeader & echo  --- Uninstall an application using Winget ---
@@ -82,7 +95,7 @@ for %%P in (%packages%) do (
 echo. & echo  !cSuccess![V] Uninstallation process finished.!cReset! & pause & goto MainMenu
 
 :CleanupData
-call :ShowHeader & echo             !cTitle!CLEAN UP LEFTOVER DATA (SAFE MODE)!cReset!
+call :ShowHeader & echo               !cTitle!CLEAN UP LEFTOVER DATA (SAFE MODE)!cReset!
 echo !cSuccess!Folders will be MOVED to the quarantine directory:!cReset! !cWarning!%QuarantineDir%!cReset! & echo.
 set /p "keyword=!cChoice!Application keyword: !cReset!" & if "%keyword%"=="" goto MainMenu
 echo [%DATE% %TIME%] Cleanup started for keyword: "%keyword%". >> "%LogFile%"
@@ -107,7 +120,7 @@ if %foundCount% equ 0 ( echo. & echo  !cSuccess![+] No folders matching the keyw
 echo. & pause & goto MainMenu
 
 :RegistryCleanup
-call :ShowHeader & echo                 !cError! --- PERMANENTLY DELETE REGISTRY KEYS --- !cReset!
+call :ShowHeader & echo               !cError! --- PERMANENTLY DELETE REGISTRY KEYS --- !cReset!
 echo !cError!DANGER! This action is IRREVERSIBLE and can damage your system.!cReset! & echo.
 echo !cChoice!Are you absolutely sure you want to proceed? [Y/N]!cReset! & choice /c YN /n
 if errorlevel 2 goto MainMenu
@@ -129,7 +142,7 @@ echo !cTitle!-------------------------------------------------------------------
 echo !cSuccess![+] Search complete. Found and processed %foundCount% potential keys.!cReset! & pause & goto MainMenu
 
 :UninstallSoftware
-call :ShowHeader & echo             !cTitle!UNINSTALL SOFTWARE - AUTOMATIC LIST!cReset! & echo.
+call :ShowHeader & echo               !cTitle!UNINSTALL SOFTWARE - AUTOMATIC LIST!cReset! & echo.
 echo !cWarning![*] Please wait, generating list of installed programs...!cReset!
 set "count=0"
 set "RegPath64=HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
@@ -177,16 +190,5 @@ echo. & echo  --- Uninstall process finished --- & pause & goto MainMenu
 :CreateDefaultConfig
 (
     echo ; --- GN Manager Suite Configuration ---
-    echo ; -- General Settings --
-    echo LogFile=GN_Manager_Log.txt
-    echo ; -- Cleaner Manager Settings --
-    echo QuarantineDir=.\Cleanup_Quarantine
-    echo SearchPaths=%%ProgramFiles%% %%ProgramFiles(x86)%% %%APPDATA%% %%LOCALAPPDATA%% %%PROGRAMDATA%%
-    echo ; -- Backup Manager Settings --
-    echo BackupDir=.\Application_Backups
-    echo ; --- Application Data Profiles for Backup Manager ---
-    echo ;[Profile:VSCode]
-    echo ;Extensions=%%USERPROFILE%%\.vscode\extensions
-    echo ;UserSettings=%%USERPROFILE%%\AppData\Roaming\Code\User
 ) > "%ConfigFile%"
 goto :eof
