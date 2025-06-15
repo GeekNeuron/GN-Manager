@@ -1,7 +1,7 @@
 # GN Manager Suite 🚀
 
 <p align="center">
-  <img src="docs/assets/logo.svg" alt="GN Manager Logo" width="120">
+  <img src="https://raw.githubusercontent.com/GeekNeuron/GN-Manager/main/docs/assets/logo.svg" alt="GN Manager Logo" width="120">
 </p>
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
