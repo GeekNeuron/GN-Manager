@@ -45,7 +45,7 @@ echo    [2] Review Local Administrator Accounts
 echo    [3] Find Unquoted Service Paths (Vulnerability Scan)
 echo    [4] Scan Hosts File for Suspicious Entries
 echo.
-echo    [5] !cSuccess!Export Full Audit Report to CSV!cReset!
+echo    [5] !cSuccess!Export Full Audit Report to Files!cReset!
 echo.
 echo    [6] Exit
 echo.
@@ -54,7 +54,7 @@ if "%choice%"=="1" call :CheckPorts
 if "%choice%"=="2" call :CheckAdmins
 if "%choice%"=="3" call :CheckServices
 if "%choice%"=="4" call :CheckHosts
-if "%choice%"=="5" call :ExportAuditToCsv
+if "%choice%"=="5" call :ExportAudit
 if "%choice%"=="6" exit /b
 goto MainMenu
 
@@ -79,12 +79,12 @@ set "HostsFile=%windir%\System32\drivers\etc\hosts"
 findstr /v /b /c:"#" /b /c:"127.0.0.1" /b /c:"::1" /b /c:" " /b /c:"" "%HostsFile%"
 echo. & echo !cWarning!Any lines above are non-standard. If empty, hosts file is clean.!cReset! & echo. & pause & goto MainMenu
 
-:ExportAuditToCsv
-call :ShowHeader & echo  --- Export Full Security Audit to CSV ---
+:ExportAudit
+call :ShowHeader & echo  --- Export Full Security Audit ---
 set "timestamp=%date:~10,4%%date:~4,2%%date:~7,2%_%time:~0,2%%time:~3,2%%time:~6,2%" & set "timestamp=!timestamp: =0!"
 set "ReportFolder=.\GN_Security_Audit_%timestamp%"
 md "%ReportFolder%"
-echo !cWarning![*] Generating CSV reports... please wait.!cReset!
+echo !cWarning![*] Generating audit files... please wait.!cReset!
 powershell -Command "netstat -anb | find 'LISTENING' | find 'TCP' | Out-File '%ReportFolder%\open_ports.txt' -Encoding utf8"
 powershell -Command "net localgroup administrators | Out-File '%ReportFolder%\admin_accounts.txt' -Encoding utf8"
 powershell -Command "Get-WmiObject -Class Win32_Service | Where-Object { $_.PathName -and $_.PathName -notlike '`"*' -and $_.PathName -like '* *' } | Select-Object Name, PathName, State | Export-Csv -Path '%ReportFolder%\unquoted_services.csv' -NoTypeInformation -Encoding UTF8"
