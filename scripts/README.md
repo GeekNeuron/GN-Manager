@@ -14,7 +14,7 @@ Welcome to the command center of the GN Manager Suite. This directory contains t
 
 ## The GN Manager Arsenal (Tool Definitions)
 
-Here is a complete, in-depth guide to each of the 12 tools in the suite.
+Here is a complete, in-depth guide to each of the 15 tools in the suite.
 
 ###  launcher.png **GN Manager Suite**
 This is the main gateway and central command hub for the entire toolkit. It provides a clean, categorized menu that allows you to seamlessly launch any specialized tool and returns you to the main menu upon completion, creating a unified and fluid user experience.
