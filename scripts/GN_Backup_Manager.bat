@@ -78,6 +78,7 @@ for /f "tokens=2 delims=[]" %%P in ('findstr /b /c:"[Profile:" "%ConfigFile%"') 
 )
 if %profileCount% equ 0 ( echo !cError![!] No profiles found in '%ConfigFile%'.!cReset! & pause & goto MainMenu)
 echo. & set /p "p_choice=!cChoice!Choose a profile number to export: !cReset!"
+if "%p_choice%"=="" goto MainMenu
 if %p_choice% LEQ 0 if %p_choice% GTR %profileCount% goto ExportData
 
 call :ShowHeader & echo --- Choose Backup Format ---
@@ -109,12 +110,13 @@ echo !cTitle!-------------------------------------------------------------------
 echo !cSuccess![V] Folder export for profile '!SelectedProfile!' completed successfully.!cReset! & pause & goto MainMenu
 
 :ExportData7z
+call :ShowHeader & echo --- Compressed Archive Export (.7z) ---
 where 7z.exe >nul 2>nul
 if %errorlevel% neq 0 (
     echo. & echo !cError![!] 7-Zip command-line tool (7z.exe) not found.!cReset!
     echo !cChoice!Would you like to try installing it now using Winget? [Y/N]!cReset!
     choice /c YN /n & if errorlevel 2 goto MainMenu
-    winget install 7zip.7zip & goto MainMenu
+    winget install 7zip.7zip & pause & goto MainMenu
 )
 set "SelectedProfile=!Profile_%p_choice%!"
 set "timestamp=%date:~10,4%%date:~4,2%%date:~7,2%_%time:~0,2%%time:~3,2%%time:~6,2%" & set "timestamp=!timestamp: =0!"
@@ -130,7 +132,7 @@ for /f "tokens=1,* delims==" %%a in ('type "%ConfigFile%"') do (
     ) else ( set "inSection=" ))
     if /i "%%a"=="[Profile:!SelectedProfile!]" set "inSection=true"
 )
-echo !cWarning!    Step 2 of 2: Compressing files into '%FinalArchive%'...!cReset!
+echo !cWarning!    Step 2 of 2: Compressing files into '%FinalArchive%'... This may take time.!cReset!
 7z.exe a -t7z "%FinalArchive%" "%TempBackupPath%\*" > nul
 rd /s /q "%TempBackupPath%"
 echo !cTitle!-------------------------------------------------------------------------------!cReset!
@@ -150,21 +152,23 @@ for /f "delims=" %%B in ('dir "%BackupDir%\*.7z" /b') do (
 )
 if %backupCount% equ 0 (echo !cError![!] No data backups found.!cReset! & pause & goto MainMenu)
 echo. & set /p "b_choice=!cChoice!Choose a backup number to restore: !cReset!"
+if "%b_choice%"=="" goto MainMenu
 if %b_choice% LEQ 0 if %b_choice% GTR %backupCount% goto ImportData
 set "SelectedBackup=!Backup_%b_choice%!"
-set "FullBackupPath=%BackupDir%\%SelectedBackup%"
+set "RestoreSourcePath=%BackupDir%\%SelectedBackup%"
+set "TempRestorePath="
 
-if "!SelectedBackup:~-3!"==".7z" (
+if /i "!SelectedBackup:~-3!"==".7z" (
     where 7z.exe >nul 2>nul
     if %errorlevel% neq 0 (
         echo. & echo !cError![!] 7-Zip is required to extract this archive. Please install it first.!cReset! & pause & goto MainMenu
     )
-    set "TempRestorePath=%BackupDir%\TEMP_RESTORE"
+    set "TempRestorePath=%BackupDir%\TEMP_RESTORE_!random!"
     if exist "%TempRestorePath%" rd /s /q "%TempRestorePath%"
     md "%TempRestorePath%"
     echo !cWarning![*] Extracting archive... please wait.!cReset!
-    7z.exe x "%FullBackupPath%" -o"%TempRestorePath%" > nul
-    set "FullBackupPath=%TempRestorePath%"
+    7z.exe x "%RestoreSourcePath%" -o"%TempRestorePath%" > nul
+    set "RestoreSourcePath=%TempRestorePath%"
 )
 
 for /f "tokens=1 delims=_" %%N in ("!SelectedBackup!") do set "ProfileName=%%N"
@@ -177,12 +181,12 @@ for /f "tokens=1,* delims==" %%a in ('type "%ConfigFile%"') do (
         set "key=%%a" & set "path=%%b" & set "path=!path:%%USERPROFILE%%=%USERPROFILE%!"
         echo !cTitle!-------------------------------------------------------------------------------!cReset!
         echo  [*] Restoring '!key!' to '!path!'
-        robocopy "!FullBackupPath!\!key!" "!path!" /E /R:2 /W:5 /NFL /NDL /NJH /NJS /nc /ns /np > nul
+        robocopy "!RestoreSourcePath!\!key!" "!path!" /E /R:2 /W:5 /NFL /NDL /NJH /NJS /nc /ns /np > nul
     ) else ( set "inSection=" ))
     if /i "%%a"=="[Profile:!ProfileName!]" set "inSection=true"
 )
 :CleanupAndExit
-if exist "%TempRestorePath%" rd /s /q "%TempRestorePath%"
+if defined TempRestorePath ( if exist "%TempRestorePath%" rd /s /q "%TempRestorePath%" )
 echo !cTitle!-------------------------------------------------------------------------------!cReset!
 echo !cSuccess![V] Import for backup '!SelectedBackup!' completed successfully.!cReset! & pause & goto MainMenu
 
