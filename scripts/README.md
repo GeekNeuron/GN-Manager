@@ -20,7 +20,7 @@ Here is a complete, in-depth guide to each of the 15 tools in the suite.
 This is the main gateway and central command hub for the entire toolkit. It provides a clean, categorized menu that allows you to seamlessly launch any specialized tool and returns you to the main menu upon completion, creating a unified and fluid user experience.
 
 ---
-### 1. Software Installation & Management
+### | 1. Software Installation & Management
 
 #### ⚙️ **GN Winget Manager**
 Your modern command-line portal to the Windows Package Manager repository.
@@ -36,7 +36,7 @@ A hyper-efficient utility for rapid, offline, bulk software installation.
     * **Silent Sequential Installation:** The script automatically detects all `.exe` and `.msi` files and attempts to install them silently and in sequence, preventing conflicts.
 
 ---
-### 2. System Cleanup & Optimization
+### | 2. System Cleanup & Optimization
 
 #### 🧹 **GN Cleaner Manager**
 A surgical tool for deep system hygiene and complete software removal.
@@ -61,7 +61,7 @@ The "emergency boost" for your system, designed to optimize resource usage in re
     * **Startup Manager:** Lists all applications that run at startup and provides quick shortcuts to the official Windows tools (Task Manager, Startup Folder) to manage them.
 
 ---
-### 3. System Repair & Security
+### | 3. System Repair & Security
 
 #### 🔧 **GN Repair Toolkit**
 The system's "mechanic," designed to fix common and complex Windows issues with a single click.
@@ -86,7 +86,7 @@ A read-only "security consultant" that audits your system for common vulnerabili
     * **UI Tweaks:** Easily toggle settings like showing hidden files and file extensions.
 
 ---
-### 4. Data & Driver Management
+### | 4. Data & Driver Management
 
 #### 💾 **GN Backup Manager**
 The ultimate data-fortification and system-migration utility.
@@ -105,7 +105,7 @@ A complete lifecycle management tool for your system's drivers.
     * **Bulk Driver Restore (Import):** Automatically installs all drivers from your backup folder onto a new system.
 
 ---
-### 5. Analysis & Reporting
+### | 5. Analysis & Reporting
 
 #### ℹ️ **GN System Info**
 Your personal system diagnostician, providing a complete manifest of your hardware and software.
@@ -121,7 +121,7 @@ A network detective's toolkit for troubleshooting any connectivity issue.
     * **Live Monitoring:** Lists all active network connections (`netstat`) and includes an integrated Internet Speed Test utility.
  
     * ---
-### 6. Advanced Utilities & Automation
+### | 6. Advanced Utilities & Automation
 
 #### 🕒 **GN Restore Point Manager**
 The "time machine" for your operating system, providing a simple and powerful command-line interface to manage Windows System Restore points.
