@@ -120,7 +120,7 @@ A network detective's toolkit for troubleshooting any connectivity issue.
     * **Advanced Lookups:** Performs deep DNS analysis (MX, NS, TXT records) and WHOIS lookups for domain information.
     * **Live Monitoring:** Lists all active network connections (`netstat`) and includes an integrated Internet Speed Test utility.
  
-    * ---
+---
 ### | 6. Advanced Utilities & Automation
 
 #### 🕒 **GN Restore Point Manager**
