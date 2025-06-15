@@ -53,42 +53,52 @@ echo. & goto :eof
 call :ShowHeader
 echo                   !cTitle!Welcome to the GN Manager Suite!cReset!
 echo.
-echo  !cSuccess!----- Installation & Updates -----!cReset!
+echo  !cSuccess!----- Installation & Software Management -----!cReset!
 echo    [1] GN Winget Manager
 echo    [2] GN Local Install Manager
 echo.
-echo  !cSuccess!----- System Maintenance & Repair -----!cReset!
+echo  !cSuccess!----- System Cleanup & Optimization -----!cReset!
 echo    [3] GN Cleaner Manager
-echo    [4] GN Repair Toolkit
+echo    [4] GN Disk Analyzer
 echo    [5] GN System Optimizer
-echo    [6] !cError!GN Tweak Manager (For Experts)!cReset!
 echo.
-echo  !cSuccess!----- Analysis & Diagnostics -----!cReset!
-echo    [7] GN Disk Analyzer
-echo    [8] GN System Info
-echo    [9] GN Network Manager
+echo  !cSuccess!----- System Repair & Security -----!cReset!
+echo    [6] GN Repair Toolkit
+echo    [7] GN Security Auditor
+echo    [8] !cError!GN Tweak Manager (For Experts)!cReset!
 echo.
-echo  !cSuccess!----- Data & Driver Management -----!cReset!
-echo    [10] GN Backup Manager
-echo    [11] GN Driver Manager
+echo  !cSuccess!----- Data, Drivers & Diagnostics -----!cReset!
+echo    [9] GN Backup Manager
+echo    [10] GN Driver Manager
+echo    [11] GN Restore Point Manager
+echo    [12] GN System Info
+echo    [13] GN Network Manager
+echo.
+echo  !cSuccess!----- Advanced Utilities -----!cReset!
+echo    [14] GN File Commander
+echo    [15] GN Automation Scheduler
 echo.
 echo  !cTitle!------------------------------------!cReset!
-echo    [12] Exit Suite
+echo    [16] Exit Suite
 echo.
-set /p "choice=!cChoice!Enter your choice (1-12): !cReset!"
+set /p "choice=!cChoice!Enter your choice (1-16): !cReset!"
 
 if "%choice%"=="1" call GN_Winget_Manager.bat & goto MainMenu
 if "%choice%"=="2" call GN_Local_Install_Manager.bat & goto MainMenu
 if "%choice%"=="3" call GN_Cleaner_Manager.bat & goto MainMenu
-if "%choice%"=="4" call GN_Repair_Toolkit.bat & goto MainMenu
+if "%choice%"=="4" call GN_Disk_Analyzer.bat & goto MainMenu
 if "%choice%"=="5" call GN_System_Optimizer.bat & goto MainMenu
-if "%choice%"=="6" call GN_Tweak_Manager.bat & goto MainMenu
-if "%choice%"=="7" call GN_Disk_Analyzer.bat & goto MainMenu
-if "%choice%"=="8" call GN_System_Info.bat & goto MainMenu
-if "%choice%"=="9" call GN_Network_Manager.bat & goto MainMenu
-if "%choice%"=="10" call GN_Backup_Manager.bat & goto MainMenu
-if "%choice%"=="11" call GN_Driver_Manager.bat & goto MainMenu
-if "%choice%"=="12" exit /b
+if "%choice%"=="6" call GN_Repair_Toolkit.bat & goto MainMenu
+if "%choice%"=="7" call GN_Security_Auditor.bat & goto MainMenu
+if "%choice%"=="8" call GN_Tweak_Manager.bat & goto MainMenu
+if "%choice%"=="9" call GN_Backup_Manager.bat & goto MainMenu
+if "%choice%"=="10" call GN_Driver_Manager.bat & goto MainMenu
+if "%choice%"=="11" call GN_Restore_Point_Manager.bat & goto MainMenu
+if "%choice%"=="12" call GN_System_Info.bat & goto MainMenu
+if "%choice%"=="13" call GN_Network_Manager.bat & goto MainMenu
+if "%choice%"=="14" call GN_File_Commander.bat & goto MainMenu
+if "%choice%"=="15" call GN_Automation_Scheduler.bat & goto MainMenu
+if "%choice%"=="16" exit /b
 goto MainMenu
 
 :CreateDefaultConfig
