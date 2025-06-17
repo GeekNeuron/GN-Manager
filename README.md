@@ -1,67 +1,104 @@
-# GN Manager Suite 🚀
+# 🚀 The GN Media Toolkit
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Version](https://img.shields.io/badge/Version-4.0-blue.svg)
-
-Welcome to **GN Manager**, a powerful and professional suite of command-line tools designed to streamline and automate software management on Windows. Authored by **GeekNeuron**, this suite provides a galactic-level toolset for power users, developers, and system administrators.
-
----
-
-## Key Features
-
-The GN Manager suite is a comprehensive collection of specialized, high-performance tools, all accessible through the central **GN Manager Suite** launcher.
-
-1.  **GN Winget Manager:** For modern, online software installation, searching, and upgrading via Winget.
-2.  **GN Local Install Manager:** For rapid, offline installation of software from a local folder of installers.
-3.  **GN Cleaner Manager:** A deep-cleaning tool for uninstalling applications and removing leftover files and registry entries.
-4.  **GN Backup Manager:** A vital utility for backing up and restoring application data, settings, and registry keys.
-5.  **GN System Info:** A detailed reporter that displays comprehensive information about your system's hardware and software.
-6.  **GN Network Manager:** A powerful diagnostics toolkit for analyzing and troubleshooting network and internet issues.
-7.  **GN Repair Toolkit:** An expert-level tool for fixing common problems in Windows and its services, like network stack issues, SFC, and DISM repairs.
-8.  **GN Tweak Manager:** A configuration tool for power users to enable or disable sensitive Windows settings like Defender, Windows Update, and the Firewall.
-9.  **GN Driver Manager:** An advanced utility for diagnosing driver issues, finding correct drivers online, and performing full backup/restore of all third-party drivers.
-10. **GN Disk Analyzer:** A powerful disk space reporter that scans drives/folders to show which files and subfolders are consuming the most space.
-11. **GN System Optimizer:** A performance utility to free up system memory (RAM), manage high-CPU processes, and view startup applications.
-12. **GN Restore Point Manager:** A simple interface for creating, listing, and deleting Windows System Restore Points.
-13. **GN Security Auditor:** A read-only scanner to audit the system for common security vulnerabilities like open ports, unquoted service paths, and suspicious hosts file entries.
-14. **GN File Commander:** An advanced utility for bulk file operations, including bulk renaming, duplicate file finding, and automatic organization.
-15. **GN Automation Scheduler:** A user-friendly front-end for the Windows Task Scheduler to automate the execution of other GN Manager tools.
+<p align="center">
+  <strong>An all-in-one command-line suite for managing, editing, and automating all your media needs.</strong>
+</p>
+<p align="center">
+  Built upon the power of legendary open-source tools:
+  <br>
+  <strong>FFmpeg</strong> | <strong>yt-dlp</strong> | <strong>ImageMagick</strong>
+</p>
 
 ---
 
-## Website & Live Demo
+## 📖 About This Project
 
-Check out the project's official page for detailed descriptions and a modern UI.
-
-**[https://geekneuron.github.io/GN-Manager/](https://geekneuron.github.io/GN-Manager/)**
-
-### Website Screenshot
-*(Please replace this text with a screenshot of the GitHub Pages website)*
-![Website Screenshot](https://via.placeholder.com/800x400.png?text=GitHub+Pages+UI)
+The **GN Toolkit** is the result of an exploratory journey to challenge the maximum capabilities of command-line tools. What began as a simple need to merge files has evolved into a complete software suite with 16 distinct tools, capable of performing complex tasks including intelligent workflows, conditional processing, and full automation. This toolkit is designed for power users, media archivists, and anyone who seeks absolute control over their media files.
 
 ---
 
-## The Tools in Action
+## ✨ Key Features
 
-*(Please replace this text with a composite screenshot showing the four .bat tool menus)*
-![Tools Screenshot](https://via.placeholder.com/800x400.png?text=GN+Manager+Tools+in+Action)
-
----
-
-## Installation & Usage
-
-1.  Navigate to the `scripts/` directory in this repository.
-2.  Download all `.bat` files.
-3.  Place all scripts in the **same folder** on your computer.
-4.  To access all tools from a central menu, run the main launcher: **`GN_Manager_Suite.bat`**.
-5.  The necessary Admin elevation will be handled automatically. You can also run individual tools directly if you prefer.
+* **Total File Management:** Merge, compress, convert, and edit audio and video files.
+* **Intelligent Automation:** Conditional and batch processing of files based on your quality standards.
+* **Online & Subtitle Tools:** Download videos and subtitles from YouTube and quickly search subtitle websites.
+* **Analysis & Extraction:** Rip audio, create high-quality GIFs, take screenshots, and display detailed technical specifications of media files.
+* **Visual Processing:** Graphically analyze live audio waveforms and create cinematic storyboards from your videos.
+* **Central Dashboard:** Access all tools from a single, user-friendly, and organized menu.
 
 ---
 
-## License
+## ⚙️ Prerequisites & Setup (Launch Checklist)
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+To get the toolkit operational, please follow these three steps carefully.
 
-## Author
+### Step 1: Get The Scripts
+Place all 16 script files (`.bat`) from this project into a new, single folder. This will be your toolkit's main directory.
 
-Created with ❤️ by **GeekNeuron**.
+### Step 2: Install The Galactic Engines
+This suite relies on 3 core applications. Download them from the links below and place their executable files (`.exe`) in the **same folder** where you placed the scripts.
+
+* **FFmpeg Suite (includes `ffmpeg`, `ffprobe`, `ffplay`):**
+    * **Download Link:** [**Gyan.dev FFmpeg Builds (Full Release Version)**](https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-full.7z)
+    * **Instructions:** After downloading, extract the `.7z` archive using a program like 7-Zip or WinRAR. Copy the **three files** `ffmpeg.exe`, `ffprobe.exe`, and `ffplay.exe` from the `bin` folder and place them in your toolkit directory.
+
+* **yt-dlp (for YouTube Downloading):**
+    * **Download Link:** [**yt-dlp.exe (Latest Release)**](https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe)
+    * **Instructions:** Simply place the downloaded `yt-dlp.exe` file directly into your toolkit directory.
+
+* **ImageMagick (for Image Processing):**
+    * **Download Link:** [**ImageMagick Official Download Page**](https://imagemagick.org/script/download.php)
+    * **Instructions:** Download and **install** one of the Windows versions.
+    * **Crucial Installation Step:** During installation, make sure you check the box that says **"Add application directory to your system PATH"**. This is essential for the "Cinematic Scene Creator" tool to work correctly.
+
+### Step 3: Final Systems Check
+Your toolkit folder should now contain **16 script files** and **4 executable files** (`ffmpeg.exe`, `ffprobe.exe`, `ffplay.exe`, `yt-dlp.exe`). ImageMagick should be installed on your system.
+
+---
+
+## 🚀 The Tools
+
+All tools are accessible from the main dashboard, `GN-Toolkit-v3-Final.bat`.
+
+### 🌌 Workflows
+> These are advanced meta-scripts that combine multiple tools into a single, intelligent workflow.
+
+* `GN-Master-Downloader.bat`: Takes a YouTube URL, downloads the video and subtitles, compresses the video, and merges everything into a final, standardized file.
+* `GN-Quality-Enforcer.bat`: Scans a folder and intelligently re-encodes only the files that do not meet your specified quality standards (codec, resolution).
+* `GN-Scene-Creator.bat`: Creates a beautiful cinematic storyboard poster from your video by combining the power of FFmpeg and ImageMagick.
+
+### 🛠️ Core Tools: Creation & Conversion
+* `GN-Ultimate-Merger.bat`: Professionally merges video, audio, and subtitle files.
+* `GN-Pro-Compressor.bat`: Compresses and converts videos with full control over quality (x265/x264).
+* `GN-Audio-Converter.bat`: Converts audio files between various formats (MP3, AAC, etc.).
+
+### ✂️ Editing & Extraction
+* `GN-QuickFix.bat`: A tool for common fixes like rotating a video or adding a permanent watermark.
+* `GN-Extractor.bat`: For ripping audio, creating high-quality GIFs, or taking a screenshot from a video.
+
+### 🌐 Subtitle & Online Tools
+* `GN-Subtitle-Downloader.bat`: Downloads subtitles in various languages from a YouTube link.
+* `GN-Subtitle-Search.bat`: Quickly opens search results for a movie/series name in popular subtitle websites.
+* `GN-Stream-Tester.bat`: Plays and tests live online streams, such as internet radio.
+
+### 🔍 Analysis & Playback
+* `GN-Inspector.bat`: Displays a clean, detailed technical specification sheet for any media file.
+* `GN-Visual-Analyzer.bat`: Plays a media file while providing a live, graphical analysis of its audio waveform and frequency spectrum.
+* `GN-Quick-Preview.bat`: A lightweight, borderless player for quick media previews. (Best used by dragging and dropping a file onto the script icon).
+
+### 🤖 Automation
+* `GN-Batch-Processor.bat`: A simple, fast automation tool to merge all same-named video and audio pairs in a folder.
+
+---
+
+## 💡 How to Use
+
+The easiest way to start is by running the main launcher file: **`GN-Toolkit-v3-Final.bat`**.
+This will present you with a central dashboard and a categorized menu, giving you access to all the other tools.
+
+> For tools with unique functionality (like `GN-Quick-Preview.bat`, which is optimized for drag-and-drop), you can still use them independently as needed.
+
+---
+<p align="center">
+  <em>This toolkit began with curiosity and evolved through collaboration. Enjoy exploring the endless universe of the command line!</em>
+</p>
